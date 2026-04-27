@@ -1,0 +1,12 @@
+www.earth.gov
+dev.earth.gov
+ingest.eic.earth.gov
+sm2a.eic.earth.gov
+staging.earth.gov
+tutorials.earth.gov
+sm2a.ghgcenter.earth.gov
+sm2a.earth.gov
+sm2a.eic.staging.earth.gov
+sm2a.eic-staging.staging.earth.gov
+sealevel.staging.earth.gov
+sm2a.staging.earth.gov
