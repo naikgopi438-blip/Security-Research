@@ -15,3 +15,7 @@ sm2a.staging.earth.gov
 tutorials.earth.gov
 www.earth.gov
 dev.earth.gov
+### Critical Discovery: Apache Airflow - Mon Apr 27 18:54:01 IST 2026
+- Found Apache Airflow instance on sm2a.staging.earth.gov
+- Server detected: gunicorn
+- Potential for Unauthenticated Access / Info Leak.
