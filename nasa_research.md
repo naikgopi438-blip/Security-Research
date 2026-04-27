@@ -19,3 +19,7 @@ dev.earth.gov
 - Found Apache Airflow instance on sm2a.staging.earth.gov
 - Server detected: gunicorn
 - Potential for Unauthenticated Access / Info Leak.
+### CRITICAL: Swagger UI Exposed - Mon Apr 27 19:00:48 IST 2026
+- Exposed Swagger UI found at /api/v1/ui/
+- OpenAPI definition link: /api/v1/openapi.json
+- This allows full mapping of the Airflow API surface.
