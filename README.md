@@ -1,0 +1,1 @@
+# Microsoft Subdomain Takeover Research

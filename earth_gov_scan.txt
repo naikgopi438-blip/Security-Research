@@ -1,0 +1,3 @@
+Target: earth.gov
+Findings: Next.js framework detected, CloudFront WAF active.
+Header: x-powered-by: Next.js
